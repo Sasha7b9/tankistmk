@@ -21,3 +21,6 @@ python3 manage.py runserver 0.0.0.0:8001
 
 # Устанавливаем права на скачивание
 chmod 644 downloads/download.txt
+
+# Дать права папке на запись в неё через WinSCP
+chmod 777 ./downloads
