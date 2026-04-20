@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.views.static import serve
 from django.urls import path, re_path
 from main.views import index, load_page, download_file
+from django.conf import settings
 
 urlpatterns = [
     path('', index, name='index'),
