@@ -132,6 +132,16 @@ def load_page(request, page_name):
                 <h2>Разработка</h2>
                 <p>В этом разделе представлена техническая документация.</p>
                 <p>
+                    <a href="https://c4engine.com/docs/">
+                        📚 Документация C4 7.2
+                    </a>
+                </p>
+                <p>
+                    <a href="https://c4engine.com/wiki/index.php?title=Main_Page">
+                        📚 Wiki C4 7.2
+                    </a>
+                </p>
+                <p>
                     <a href="/downloads/C4-4.5-Docs/index.html" class="docs-link">
                         📚 Документация C4 4.5
                     </a>
