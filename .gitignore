@@ -1,1 +1,4 @@
 *.pyc
+
+site/staticfiles/*
+site/venv/*
