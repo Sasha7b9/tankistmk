@@ -1,43 +1,21 @@
-<h2>Добро пожаловать на портал "Танкист МК"</h2>
-<p>Новые скриншоты будут появляться здесь автоматически:</p>
+<h2>Тест изображений</h2>
 
-<div id="image-container" style="text-align: center; margin-top: 30px;">
-    <img id="live-image" src="" alt="Ожидание новых скриншотов" 
-         style="max-width: 80%; max-height: 500px; display: none; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-    <div id="no-image-message" style="color: #666; padding: 50px;">
-        ⏳ Ожидание новых скриншотов...
-    </div>
+<div style="text-align: center;">
+    <img id="test-img" style="max-width: 100%; max-height: 500px; border: 1px solid #ccc;">
 </div>
 
 <script>
-    const liveImage = document.getElementById('live-image');
-    const noImageMessage = document.getElementById('no-image-message');
-    let lastFilename = '';
-    
-    function loadImage(filename) {
-        if (filename === lastFilename) return;
-        lastFilename = filename;
-        liveImage.src = `/downloads/screens/${filename}?t=${new Date().getTime()}`;
-        liveImage.style.display = 'block';
-        noImageMessage.style.display = 'none';
-        console.log('Загружено изображение:', filename);
-    }
-    
-    function checkForNewImage() {
+    function loadImage() {
         fetch('/api/last-image/')
-            .then(response => response.json())
+            .then(r => r.json())
             .then(data => {
-                console.log('Проверка изображений, получено:', data);
                 if (data.filename) {
-                    loadImage(data.filename);
+                    document.getElementById('test-img').src = '/downloads/screens/' + data.filename + '?t=' + Date.now();
+                    console.log('Загружено:', data.filename);
                 }
-            })
-            .catch(error => {
-                console.log('Ошибка при проверке:', error);
             });
     }
     
-    // Проверяем каждые 3 секунды
-    setInterval(checkForNewImage, 3000);
-    checkForNewImage(); // первый раз сразу
+    loadImage();
+    setInterval(loadImage, 3000);
 </script>
