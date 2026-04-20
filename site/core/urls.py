@@ -16,10 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.urls import path
-from main.views import index
-
+from main.views import index, load_page
 
 urlpatterns = [
-    path('', index),
+    path('', index, name='index'),
+    path('api/<str:page_name>/', load_page, name='load_page'),
 ]

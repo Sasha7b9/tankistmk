@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Танкист МК</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- Верхняя зона: заголовок -->
+        <div class="header">
+            <h1>Танкист МК</h1>
+        </div>
+        
+        <!-- Основная зона: левая панель + контент -->
+        <div class="main-content">
+            <!-- Левая зона: вертикальное меню -->
+            <div class="sidebar">
+                <button class="nav-btn" onclick="loadPage('home')">🏠 Главная</button>
+                <button class="nav-btn" onclick="loadPage('about')">📖 О танках</button>
+                <button class="nav-btn" onclick="loadPage('gallery')">🖼️ Галерея</button>
+                <button class="nav-btn" onclick="loadPage('history')">📜 История</button>
+                <button class="nav-btn" onclick="loadPage('contact')">📞 Контакты</button>
+            </div>
+            
+            <!-- Правая зона: контент -->
+            <div class="content" id="content-area">
+                <!-- Сюда будет загружаться контент -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function loadPage(page) {
+            fetch(`/api/${page}/`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('content-area').innerHTML = html;
+                })
+                .catch(error => {
+                    document.getElementById('content-area').innerHTML = '<h2>Ошибка загрузки</h2><p>Попробуйте позже</p>';
+                });
+        }
+        
+        // Загружаем главную страницу при запуске
+        window.onload = function() {
+            loadPage('home');
+        };
+    </script>
+</body>
+</html>
