@@ -132,12 +132,12 @@ def load_page(request, page_name):
                 <h2>Разработка</h2>
                 <p>В этом разделе представлена техническая документация.</p>
                 <p>
-                    <a href="/downloads/C4-4.5-Docs/index.htm" class="docs-link">
+                    <a href="/downloads/C4-4.5-Docs/index.html" class="docs-link">
                         📚 Документация C4 4.5
                     </a>
                 </p>
                 <p>
-                    <a href="/downloads/C4_forums/terathon/www.terathon.com/forums/index.html" class="docs-link">
+                    <a href="/downloads/C4_forums/terathon/www.terathon.com/forums/index.htm" class="docs-link">
                         📚 Форум C4 4.5
                     </a>
                 </p>
