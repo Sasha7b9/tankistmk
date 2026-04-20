@@ -141,7 +141,11 @@ def load_page(request, page_name):
                         📚 Форум C4 4.5
                     </a>
                 </p>
-
+                <p>
+                    <a href="/downloads/C4_wiki/C4wiki/index.html" class="docs-link">
+                        📚 Wiki C4 4.5
+                    </a>
+                </p>
             '''
         }
     }
