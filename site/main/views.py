@@ -1,6 +1,27 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
+from django.http import FileResponse
+from django.conf import settings
+import os
+
+def download_file(request):
+    """Скачивание файла с сервера"""
+    file_path = os.path.join(settings.BASE_DIR, 'download.txt')
+    
+    # Если файл не существует, создаем его
+    if not os.path.exists(file_path):
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write("Содержимое файла для скачивания\n")
+            f.write("Сайт: Танкист МК\n")
+            f.write("Дата: 2026-04-20\n")
+    
+    # Отправляем файл
+    return FileResponse(open(file_path, 'rb'), 
+                       content_type='text/plain',
+                       as_attachment=True,
+                       filename='download.txt')
+
 
 def index(request):
     """Главная страница с тремя зонами"""
