@@ -5,6 +5,9 @@ python3 -m venv venv
 source venv/bin/activate
 pip install django
 
+# Для мониторинга папки с рисунками
+pip install watchdog channels channels-redis
+
 django-admin startproject core .
 
 python3 manage.py startapp main

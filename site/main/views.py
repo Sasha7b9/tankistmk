@@ -3,8 +3,22 @@ from django.http import HttpResponse, Http404, FileResponse
 from django.conf import settings
 from django.template.loader import render_to_string
 from urllib.parse import quote
+from django.http import JsonResponse
 import os
 import mimetypes
+import glob
+
+def get_last_image(request):
+    """Возвращает имя последнего JPG файла в папке screens"""
+    screens_dir = os.path.join(settings.BASE_DIR, 'downloads', 'screens')
+    os.makedirs(screens_dir, exist_ok=True)
+    
+    jpg_files = glob.glob(os.path.join(screens_dir, '*.jpg'))
+    if jpg_files:
+        latest = max(jpg_files, key=os.path.getctime)
+        filename = os.path.basename(latest)
+        return JsonResponse({'filename': filename})
+    return JsonResponse({'filename': None})
 
 def download_file(request, filename):
     """Универсальная функция для скачивания любых файлов."""

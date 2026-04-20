@@ -1,10 +1,48 @@
 <h2>Добро пожаловать на портал "Танкист МК"</h2>
-<p>Здесь вы найдете самую актуальную информацию о танках, их истории и современных разработках.</p>
-<p>Используйте меню слева для навигации по разделам сайта.</p>
-<p>Наш сайт посвящен:</p>
-<ul>
-    <li>Истории танкостроения</li>
-    <li>Современным танкам</li>
-    <li>Тактике боя</li>
-    <li>Знаменитым танкистам</li>
-</ul>
+<p>Новые скриншоты будут появляться здесь автоматически:</p>
+
+<div id="image-container" style="text-align: center; margin-top: 30px;">
+    <img id="live-image" src="" alt="Ожидание новых скриншотов" 
+         style="max-width: 80%; max-height: 500px; display: none; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <div id="no-image-message" style="color: #666; padding: 50px;">
+        ⏳ Ожидание новых скриншотов...
+    </div>
+</div>
+
+<script>
+    const imageContainer = document.getElementById('image-container');
+    const liveImage = document.getElementById('live-image');
+    const noImageMessage = document.getElementById('no-image-message');
+    
+    // Функция загрузки изображения
+    function loadImage(filename) {
+        liveImage.src = `/downloads/screens/${filename}?t=${new Date().getTime()}`;
+        liveImage.style.display = 'block';
+        noImageMessage.style.display = 'none';
+    }
+    
+    // Загружаем последнее изображение при старте
+    fetch('/api/last-image/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.filename) {
+                loadImage(data.filename);
+            }
+        });
+    
+    // WebSocket подключение
+    const wsScheme = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    const wsUrl = `${wsScheme}${window.location.host}/ws/images/`;
+    const socket = new WebSocket(wsUrl);
+    
+    socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        if (data.filename) {
+            loadImage(data.filename);
+        }
+    };
+    
+    socket.onerror = function(error) {
+        console.log('WebSocket ошибка:', error);
+    };
+</script>
