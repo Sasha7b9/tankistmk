@@ -25,9 +25,7 @@ urlpatterns = [
     path('', index, name='index'),
     path('download/<str:filename>/', download_file, name='download'),
     path('api/<str:page_name>/', load_page, name='load_page'),
-    path('api/last-image/', get_last_image, name='last-image'),
-    
-    # Для доступа к HTML-документации
+    path('api/last-image/', get_last_image, name='last-image'),  # ЭТА СТРОКА КЛЮЧЕВАЯ
     re_path(r'^downloads/(?P<path>.*)$', serve, {
         'document_root': str(settings.BASE_DIR / 'downloads'),
         'show_indexes': True
