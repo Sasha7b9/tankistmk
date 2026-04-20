@@ -151,26 +151,25 @@ body {
     transform: scale(0.95);
 }
 
-/* Стили для ссылки документации */
+/* Стили для ссылки документации (как гиперссылка) */
 .docs-link {
-    display: inline-block;
-    background: #3498db;
-    color: white;
-    padding: 12px 24px;
+    color: #3498db;
     text-decoration: none;
-    border-radius: 5px;
     font-weight: bold;
+    padding: 5px 0;
     transition: all 0.3s ease;
-    margin: 10px 0;
     cursor: pointer;
+    background: none;
+    border: none;
+    display: inline-block;
 }
 
 .docs-link:hover {
-    background: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    color: #2980b9;
+    text-decoration: underline;
+    transform: translateX(3px);
 }
 
 .docs-link:active {
-    transform: translateY(0);
+    transform: translateX(1px);
 }
