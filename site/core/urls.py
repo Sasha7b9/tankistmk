@@ -14,21 +14,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.views.static import serve
 from django.urls import path, re_path
-from main.views import index, load_page, download_file
+from django.views.static import serve
 from django.conf import settings
+from main.views import index, load_page, download_file, get_last_image  # Добавьте get_last_image
 
 urlpatterns = [
     path('', index, name='index'),
     path('download/<str:filename>/', download_file, name='download'),
     path('api/<str:page_name>/', load_page, name='load_page'),
-    path('api/last-image/', get_last_image, name='last-image'),
+    path('api/last-image/', get_last_image, name='last-image'),  # Добавьте эту строку
     
     # Для доступа к HTML-документации
     re_path(r'^downloads/(?P<path>.*)$', serve, {
-        'document_root': settings.BASE_DIR / 'downloads',
+        'document_root': str(settings.BASE_DIR / 'downloads'),
         'show_indexes': True
     }),
 ]
