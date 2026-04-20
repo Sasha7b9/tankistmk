@@ -19,13 +19,13 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.views.static import serve
 from django.conf import settings
-from main.views import index, load_page, download_file, get_last_image  # Добавьте get_last_image
+from main.views import index, load_page, download_file, get_last_image
 
 urlpatterns = [
     path('', index, name='index'),
     path('download/<str:filename>/', download_file, name='download'),
     path('api/<str:page_name>/', load_page, name='load_page'),
-    path('api/last-image/', get_last_image, name='last-image'),  # Добавьте эту строку
+    path('api/last-image/', get_last_image, name='last-image'),  # ← эта строка должна быть
     
     # Для доступа к HTML-документации
     re_path(r'^downloads/(?P<path>.*)$', serve, {

@@ -1,16 +1,8 @@
 import os
 import time
-import sys
 import json
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-
-# Добавляем путь к проекту
-sys.path.append('/home/sasha/sites/tankistmk/site')
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
-
-# Импортируем settings после настройки окружения
-from django.conf import settings
 
 class ImageHandler(FileSystemEventHandler):
     def on_created(self, event):
@@ -18,20 +10,20 @@ class ImageHandler(FileSystemEventHandler):
             filename = os.path.basename(event.src_path)
             print(f"🔔 Найдено новое изображение: {filename}")
             
-            # Сохраняем информацию о новом файле (для polling)
-            info_file = os.path.join(settings.BASE_DIR, 'downloads', 'screens', '.last_image.json')
+            # Сохраняем информацию в файл в той же папке
+            dir_path = os.path.dirname(event.src_path)
+            info_file = os.path.join(dir_path, '.last_image.json')
             try:
                 with open(info_file, 'w') as f:
                     json.dump({'filename': filename, 'timestamp': time.time()}, f)
-                print(f"✅ Информация о {filename} сохранена")
+                print(f"✅ Информация сохранена в {info_file}")
             except Exception as e:
                 print(f"❌ Ошибка сохранения: {e}")
 
 def start_monitoring():
-    # Определяем путь к папке screens
-    screens_dir = os.path.join(settings.BASE_DIR, 'downloads', 'screens')
+    # Путь к папке screens (укажите ваш реальный путь)
+    screens_dir = '/home/sasha/sites/tankistmk/site/downloads/screens'
     
-    # Создаем папку если её нет
     os.makedirs(screens_dir, exist_ok=True)
     print(f"📁 Мониторинг папки: {screens_dir}")
     
