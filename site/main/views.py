@@ -15,11 +15,15 @@ def get_last_image(request):
     
     screens_dir = '/home/sasha/sites/tankistmk/site/downloads/screens'
     
+    print(f"🔍 get_last_image вызвана, screens_dir={screens_dir}")  # ОТЛАДКА
+    
     # Создаем папку если её нет
     os.makedirs(screens_dir, exist_ok=True)
     
     # Ищем JPG файлы
     jpg_files = glob.glob(os.path.join(screens_dir, '*.jpg'))
+    
+    print(f"🔍 Найдено JPG файлов: {len(jpg_files)}")  # ОТЛАДКА
     
     # Фильтруем временные файлы и скрытые
     jpg_files = [f for f in jpg_files if not os.path.basename(f).startswith('.')]
@@ -28,10 +32,10 @@ def get_last_image(request):
         # Берем самый новый файл
         latest = max(jpg_files, key=os.path.getctime)
         filename = os.path.basename(latest)
-        print(f"DEBUG: Найден файл {filename}")  # Отладка
+        print(f"✅ Найден файл: {filename}")  # ОТЛАДКА
         return JsonResponse({'filename': filename})
     
-    print("DEBUG: Файлы не найдены")
+    print("❌ Файлы не найдены")
     return JsonResponse({'filename': None})
 
 def download_file(request, filename):
