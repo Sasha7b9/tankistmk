@@ -24,8 +24,8 @@ from main.views import index, load_page, download_file, get_last_image
 urlpatterns = [
     path('', index, name='index'),
     path('download/<str:filename>/', download_file, name='download'),
-    path('api/<str:page_name>/', load_page, name='load_page'),
-    path('api/last-image/', get_last_image, name='last-image'),  # ЭТА СТРОКА КЛЮЧЕВАЯ
+    path('api/last-image/', get_last_image, name='last-image'),  # ← ЭТА СТРОКА ДОЛЖНА БЫТЬ ВЫШЕ
+    path('api/<str:page_name>/', load_page, name='load_page'),   # ← ЭТА НИЖЕ
     re_path(r'^downloads/(?P<path>.*)$', serve, {
         'document_root': str(settings.BASE_DIR / 'downloads'),
         'show_indexes': True
