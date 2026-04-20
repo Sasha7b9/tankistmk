@@ -7,6 +7,7 @@ pip install django
 
 # Для мониторинга папки с рисунками
 pip install watchdog channels channels-redis
+pip install watchdog channels channels-redis daphne
 
 django-admin startproject core .
 
