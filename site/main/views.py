@@ -125,6 +125,25 @@ def load_page(request, page_name):
                 </ul>
                 <p>Мы открыты для сотрудничества и предложений!</p>
             '''
+        },
+                'development': {  # ← Новая страница
+            'title': 'Разработка',
+            'content': '''
+                <h2>Разработка</h2>
+                <p>В этом разделе представлена техническая документация.</p>
+                <p>
+                    <a href="#" onclick="openDocs()" class="docs-link">
+                        📚 Документация C4 4.5
+                    </a>
+                </p>
+                <p>Нажмите на ссылку выше, чтобы открыть документацию.</p>
+                
+                <script>
+                    function openDocs() {
+                        window.open('/downloads/C4-4.5-Docs/index.html', '_blank');
+                    }
+                </script>
+            '''
         }
     }
     

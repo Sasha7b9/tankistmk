@@ -150,3 +150,27 @@ body {
 .download-btn:active {
     transform: scale(0.95);
 }
+
+/* Стили для ссылки документации */
+.docs-link {
+    display: inline-block;
+    background: #3498db;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.docs-link:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.docs-link:active {
+    transform: translateY(0);
+}

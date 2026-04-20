@@ -2,3 +2,4 @@
 
 site/staticfiles/*
 site/venv/*
+site/downloads/*

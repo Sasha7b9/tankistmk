@@ -22,4 +22,10 @@ urlpatterns = [
     path('', index, name='index'),
     path('download/<str:filename>/', download_file, name='download'),
     path('api/<str:page_name>/', load_page, name='load_page'),
+    
+    # Для доступа к HTML-документации
+    re_path(r'^downloads/(?P<path>.*)$', serve, {
+        'document_root': settings.BASE_DIR / 'downloads',
+        'show_indexes': True
+    }),
 ]
