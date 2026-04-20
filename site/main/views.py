@@ -136,6 +136,12 @@ def load_page(request, page_name):
                         📚 Документация C4 4.5
                     </a>
                 </p>
+                <p>
+                    <a href="/downloads/C4_forums_terathon/www.terathon.com/forums/index.html" class="docs-link">
+                        📚 Форум C4 4.5
+                    </a>
+                </p>
+
             '''
         }
     }
