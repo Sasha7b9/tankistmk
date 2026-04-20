@@ -9,31 +9,29 @@ import mimetypes
 import glob
 
 def get_last_image(request):
-    """Возвращает имя последнего JPG файла в папке screens"""
-    screens_dir = os.path.join(settings.BASE_DIR, 'downloads', 'screens')
+    """Возвращает имя последнего JPG файла"""
+    import json
+    import glob
+    
+    screens_dir = '/home/sasha/sites/tankistmk/site/downloads/screens'
+    
+    # Создаем папку если её нет
     os.makedirs(screens_dir, exist_ok=True)
     
-    # Проверяем сохраненную информацию о последнем файле
-    info_file = os.path.join(screens_dir, '.last_image.json')
-    
-    if os.path.exists(info_file):
-        try:
-            with open(info_file, 'r') as f:
-                data = json.load(f)
-                return JsonResponse({'filename': data.get('filename')})
-        except:
-            pass
-    
-    # Если нет сохраненной информации, ищем последний файл
+    # Ищем JPG файлы
     jpg_files = glob.glob(os.path.join(screens_dir, '*.jpg'))
-    if jpg_files:
-        # Исключаем временные файлы
-        jpg_files = [f for f in jpg_files if not os.path.basename(f).startswith('.')]
-        if jpg_files:
-            latest = max(jpg_files, key=os.path.getctime)
-            filename = os.path.basename(latest)
-            return JsonResponse({'filename': filename})
     
+    # Фильтруем временные файлы и скрытые
+    jpg_files = [f for f in jpg_files if not os.path.basename(f).startswith('.')]
+    
+    if jpg_files:
+        # Берем самый новый файл
+        latest = max(jpg_files, key=os.path.getctime)
+        filename = os.path.basename(latest)
+        print(f"DEBUG: Найден файл {filename}")  # Отладка
+        return JsonResponse({'filename': filename})
+    
+    print("DEBUG: Файлы не найдены")
     return JsonResponse({'filename': None})
 
 def download_file(request, filename):
