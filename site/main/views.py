@@ -96,3 +96,6 @@ def load_page(request, page_name):
 def main_page(request):
     """Альтернативный вариант - одна страница со всем контентом"""
     return render(request, 'main/base.html')
+
+print("DEBUG: views.py loaded")
+print(f"DEBUG: get_last_image function defined: {get_last_image if 'get_last_image' in dir() else 'NOT FOUND'}")
