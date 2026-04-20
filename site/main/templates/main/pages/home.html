@@ -10,39 +10,34 @@
 </div>
 
 <script>
-    const imageContainer = document.getElementById('image-container');
     const liveImage = document.getElementById('live-image');
     const noImageMessage = document.getElementById('no-image-message');
+    let lastFilename = '';
     
-    // Функция загрузки изображения
     function loadImage(filename) {
+        if (filename === lastFilename) return;
+        lastFilename = filename;
         liveImage.src = `/downloads/screens/${filename}?t=${new Date().getTime()}`;
         liveImage.style.display = 'block';
         noImageMessage.style.display = 'none';
+        console.log('Загружено изображение:', filename);
     }
     
-    // Загружаем последнее изображение при старте
-    fetch('/api/last-image/')
-        .then(response => response.json())
-        .then(data => {
-            if (data.filename) {
-                loadImage(data.filename);
-            }
-        });
+    function checkForNewImage() {
+        fetch('/api/last-image/')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Проверка изображений, получено:', data);
+                if (data.filename) {
+                    loadImage(data.filename);
+                }
+            })
+            .catch(error => {
+                console.log('Ошибка при проверке:', error);
+            });
+    }
     
-    // WebSocket подключение
-    const wsScheme = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-    const wsUrl = `${wsScheme}${window.location.host}/ws/images/`;
-    const socket = new WebSocket(wsUrl);
-    
-    socket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        if (data.filename) {
-            loadImage(data.filename);
-        }
-    };
-    
-    socket.onerror = function(error) {
-        console.log('WebSocket ошибка:', error);
-    };
+    // Проверяем каждые 3 секунды
+    setInterval(checkForNewImage, 3000);
+    checkForNewImage(); // первый раз сразу
 </script>
