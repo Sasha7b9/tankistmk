@@ -17,3 +17,7 @@ sudo netfilter-persistent save
 python3 manage.py collectstatic --noinput
 
 python3 manage.py runserver 0.0.0.0:8001
+
+
+# Устанавливаем права на скачивание
+chmod 644 downloads/download.txt

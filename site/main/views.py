@@ -1,26 +1,48 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.template.loader import render_to_string
-from django.http import FileResponse
+from django.http import HttpResponse, Http404, FileResponse
 from django.conf import settings
 import os
+import mimetypes
 
-def download_file(request):
-    """Скачивание файла с сервера"""
-    file_path = os.path.join(settings.BASE_DIR, 'download.txt')
+def download_file(request, filename):
+    """
+    Универсальная функция для скачивания любых файлов.
+    filename - имя файла, который нужно скачать из папки downloads
+    """
     
-    # Если файл не существует, создаем его
+    # Безопасно строим путь к файлу
+    file_path = os.path.join(settings.BASE_DIR, 'downloads', filename)
+    
+    # Проверяем, существует ли файл
     if not os.path.exists(file_path):
-        with open(file_path, 'w', encoding='utf-8') as f:
-            f.write("Содержимое файла для скачивания\n")
-            f.write("Сайт: Танкист МК\n")
-            f.write("Дата: 2026-04-20\n")
+        raise Http404(f"Файл '{filename}' не найден")
     
-    # Отправляем файл
-    return FileResponse(open(file_path, 'rb'), 
-                       content_type='text/plain',
-                       as_attachment=True,
-                       filename='download.txt')
+    # Определяем MIME-тип файла
+    mime_type, encoding = mimetypes.guess_type(file_path)
+    if mime_type is None:
+        # Если тип не определен, используем общий бинарный тип
+        mime_type = 'application/octet-stream'
+    
+    # Открываем файл в бинарном режиме
+    try:
+        file_handle = open(file_path, 'rb')
+    except IOError:
+        raise Http404("Ошибка при открытии файла")
+    
+    # Создаем ответ с файлом
+    response = FileResponse(
+        file_handle,
+        content_type=mime_type,
+        as_attachment=True,
+        filename=filename
+    )
+    
+    # Добавляем дополнительные заголовки для совместимости
+    response['Content-Disposition'] = f'attachment; filename="{quote(filename)}"'
+    response['Content-Length'] = os.path.getsize(file_path)
+    response['Cache-Control'] = 'no-cache'
+    
+    return response
 
 
 def index(request):

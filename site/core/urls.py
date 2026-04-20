@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from main.views import index, load_page
+from main.views import index, load_page, download_file
 
 urlpatterns = [
     path('', index, name='index'),
+    path('download/<str:filename>/', download_file, name='download'),
     path('api/<str:page_name>/', load_page, name='load_page'),
 ]
