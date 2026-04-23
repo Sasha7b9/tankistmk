@@ -4,3 +4,5 @@ site/db.sqlite3
 site/staticfiles/*
 site/venv/*
 site/downloads/*
+site/source/*
+

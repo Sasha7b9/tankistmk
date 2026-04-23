@@ -129,3 +129,20 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    '/root/sites/tankistmk/site/main/static',
+]
+
+ALLOWED_HOSTS = ['tankistmk.ru', 'www.tankistmk.ru', '188.127.240.34']
+
+# Сообщает Django, что мы используем HTTPS, даже если прокси-сервер (Nginx) говорит об HTTP.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Принудительно перенаправлять все HTTP-запросы на HTTPS.
+# Эту опцию можно также настроить в Nginx, но так надежнее.
+SECURE_SSL_REDIRECT = True
+
+# Делаем cookies безопасными (передаваться только по HTTPS)
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
