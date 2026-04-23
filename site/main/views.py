@@ -82,7 +82,7 @@ def load_page(request, page_name):
         'gallery': 'main/pages/gallery.html',
         'history': 'main/pages/history.html',
         'contact': 'main/pages/contact.html',
-        'development': 'main/pages/development.html',
+        'documentation': 'main/pages/documentation.html',
     }
     
     if page_name in page_templates:
